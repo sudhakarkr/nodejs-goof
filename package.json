@@ -53,5 +53,8 @@
     "nodemon": "^2.0.7",
     "snyk": "^1.244.0"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "overrides": {
+    "dicer": "github:sudhakarkr/dicer#e10f0c76716458ca62d9ac481023982f565bb2e5"
+  }
 }
