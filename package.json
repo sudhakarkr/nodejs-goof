@@ -25,7 +25,7 @@
     "ejs-locals": "1.0.2",
     "errorhandler": "1.2.0",
     "express": "4.12.4",
-    "express-fileupload": "0.0.5",
+    "express-fileupload": "github:sudhakarkr/express-fileupload#f20ed737ccc33c8762deb92856b02983111cc128",
     "express-session": "^1.17.2",
     "file-type": "^8.1.0",
     "hbs": "^4.0.4",
@@ -53,5 +53,8 @@
     "nodemon": "^2.0.7",
     "snyk": "^1.244.0"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "overrides": {
+    "express-fileupload": "github:sudhakarkr/express-fileupload#f20ed737ccc33c8762deb92856b02983111cc128"
+  }
 }
