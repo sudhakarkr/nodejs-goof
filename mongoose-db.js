@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var cfenv = require("cfenv");
+var crypto = require('crypto');
 var Schema = mongoose.Schema;
 
 var Todo = new Schema({
@@ -44,12 +45,23 @@ console.log("Using Mongo URI " + mongoUri);
 
 mongoose.connect(mongoUri);
 
+function hashPassword(password) {
+  var salt = crypto.randomBytes(16).toString('hex');
+  var hash = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
+  return salt + ':' + hash;
+}
+
 User = mongoose.model('User');
 User.find({ username: 'admin@snyk.io' }).exec(function (err, users) {
   console.log(users);
   if (users.length === 0) {
     console.log('no admin');
-    new User({ username: 'admin@snyk.io', password: 'SuperSecretPassword' }).save(function (err, user, count) {
+    var adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+      console.log('error: ADMIN_PASSWORD environment variable is required to create admin user');
+      return;
+    }
+    new User({ username: 'admin@snyk.io', password: hashPassword(adminPassword) }).save(function (err, user, count) {
       if (err) {
         console.log('error saving admin user');
       }
